@@ -9,10 +9,12 @@ import (
 )
 
 var (
-	name     = "Campaign x"
-	content  = "Body Hi!"
-	contacts = []string{"email@e.com", "email2@e.com"}
-	fake = faker.New()
+	name      = "Campaign x"
+	content   = "Body Hi!"
+	contacts  = []string{"email@e.com", "email2@e.com"}
+	// createdBy = "teste@teste.com.br"
+	fake      = faker.New()
+
 )
 
 func Test_NewCampaign_CreateCampaign(t *testing.T) {
@@ -24,6 +26,7 @@ func Test_NewCampaign_CreateCampaign(t *testing.T) {
 	assert.Equal(campaign.Name, name)
 	assert.Equal(campaign.Content, content)
 	assert.Equal(len(campaign.Contacts), len(contacts))
+	// assert.Equal(createdBy, campaign.CreatedBy)
 }
 
 func Test_NewCampaign_IDIsNotNil(t *testing.T) {
@@ -32,7 +35,16 @@ func Test_NewCampaign_IDIsNotNil(t *testing.T) {
 
 	campaign, _ := NewCampaign(name, content, contacts)
 
-	assert.NotNil(campaign.CreatedOn)
+	assert.NotNil(campaign.ID)
+}
+
+func Test_NewCampaign_MustStatusStartWithPending(t *testing.T) {
+
+	assert := assert.New(t)
+
+	campaign, _ := NewCampaign(name, content, contacts)
+
+	assert.NotNil(Pending,campaign.Status)
 }
 
 func Test_NewCampaign_CreateOnMustBeNow(t *testing.T) {
@@ -76,7 +88,7 @@ func Test_NewCampaign_MustValidateContentMax(t *testing.T) {
 
 	assert := assert.New(t)
 
-	_, err := NewCampaign(name, fake.Lorem().Text(1030), contacts)
+	_, err := NewCampaign(name, fake.Lorem().Text(1040), contacts)
 
 	assert.Equal("content is required with max 1024", err.Error())
 }
@@ -85,7 +97,7 @@ func Test_NewCampaign_MustValidateContactsMin(t *testing.T) {
 
 	assert := assert.New(t)
 
-	_, err := NewCampaign(name, content, []string{})
+	_, err := NewCampaign(name, content, nil)
 
 	assert.Equal("contacts is required with min 1", err.Error())
 }
@@ -98,3 +110,12 @@ func Test_NewCampaign_MustValidateContacts(t *testing.T) {
 
 	assert.Equal("email is invalid", err.Error())
 }
+
+// func Test_NewCampaign_MustValidateCreatedBy(t *testing.T) {
+
+// 	assert := assert.New(t)
+
+// 	_, err := NewCampaign(name, content, contacts)
+
+// 	assert.Equal("createdby is invalid", err.Error())
+// }

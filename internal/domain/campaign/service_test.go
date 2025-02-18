@@ -19,13 +19,21 @@ func (r *repositoryMock) Save(campaign *Campaign) error {
 	return args.Error(0)
 }
 
+func (r *repositoryMock) Get() ([]Campaign, error) {
+	return nil, nil
+}
+
+func (r *repositoryMock) GetBy(id string) (*Campaign, error) {
+	return nil, nil
+}
+
 var (
 	newCampaign = contract.NewCampaign{
 		Name:    "Test y",
 		Content: "Body Hi!",
 		Emails:  []string{"teste@teste.com"},
 	}
-	service = Service{}
+	service = ServiceImp{}
 )
 
 func Test_Create_Campaign(t *testing.T) {

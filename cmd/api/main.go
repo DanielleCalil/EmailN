@@ -1,51 +1,31 @@
 package main
 
 import (
+	"EmailN/internal/domain/campaign"
+	"EmailN/internal/domain/infrastructure/database"
+	"EmailN/internal/endpoints"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/render"
+	"github.com/go-chi/chi/v5/middleware"
 )
-
-type product struct {
-	ID   int
-	Name string
-}
-
-type myHandler struct {}
-func (m myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("myHandler"))
-}
 
 func main() {
 	r := chi.NewRouter()
 
-	m := myHandler{}
-	r.Handle("/handler", m)
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		product := r.URL.Query().Get("product")
-		id := r.URL.Query().Get("id")
-		if product != "" {
-			w.Write([]byte(product + id))
-		} else {
-			w.Write([]byte("teste"))
-		}
-	})
-	r.Get("/{productName}", func(w http.ResponseWriter, r *http.Request) {
-		param := chi.URLParam(r, "productName")
-		w.Write([]byte(param))
-	})
-	r.Get("/json", func(w http.ResponseWriter, r *http.Request) {
-		obj := map[string]string{"message": "sucess"}
-		render.JSON(w, r, obj)
-	})
-	r.Post("/product", func(w http.ResponseWriter, r *http.Request) {
-		var product product
-		render.DecodeJSON(r.Body, &product)
-		product.ID = 5
-		render.JSON(w, r, product)
-	})
+	r.Use(middleware.RequestID)
+	r.Use(middleware.RealIP)
+	r.Use(middleware.Logger)
+	r.Use(middleware.Recoverer)
+
+	campaignService := campaign.ServiceImp{
+		Repository: &database.CampaignRepository{},
+	}
+	handler := endpoints.Handler{
+		CampaignService: &campaignService,
+	}
+	r.Post("/campaigns", endpoints.HandlerError(handler.CampaignPost))
+	r.Get("/campaigns", endpoints.HandlerError(handler.CampaignGet))
 
 	http.ListenAndServe(":3000", r)
-
 }
