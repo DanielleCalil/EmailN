@@ -1,8 +1,10 @@
 package contract
 
 type CampaignResponse struct {
-	Name    string
-	Content string
-	Emails  []string
-	Status  string
+	ID                   string
+	Name                 string
+	Content              string
+	Status               string
+	AmountOfEmailsToSend int
+	CreatedBy            string
 }

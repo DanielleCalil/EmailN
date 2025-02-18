@@ -20,12 +20,12 @@ func ValidateStruct(obj interface{}) error {
 	switch validationError.Tag() {
 	case "required":
 		return errors.New(field + " is required")
-	case "min":
-		return errors.New(field + " is required with min" + validationError.Param())
 	case "max":
-		return errors.New(field + " is required with max" + validationError.Param())
+		return errors.New(field + " is required with max " + validationError.Param())
+	case "min":
+		return errors.New(field + " is required with min " + validationError.Param())
 	case "email":
-		return errors.New(field + " is required with email")
+		return errors.New(field + " is invalid")
 	}
 	return nil
 }
