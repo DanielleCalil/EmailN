@@ -2,7 +2,7 @@ package campaign
 
 import (
 	"EmailN/internal/contract"
-	internalerrors "emailn/internal/internal-errors"
+	internalerrors "EmailN/internal/internal-errors"
 	"errors"
 )
 

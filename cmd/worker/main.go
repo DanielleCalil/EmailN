@@ -3,7 +3,7 @@ package main
 import (
 	"EmailN/internal/domain/campaign"
 	"EmailN/internal/infrastructure/database"
-	"emailn/internal/infrastructure/mail"
+	"EmailN/internal/infrastructure/mail"
 	"log"
 	"time"
 

@@ -11,9 +11,9 @@ POST  {{url}}/campaigns
 Authorization: Bearer {{access_token}}
 
 {
-    "Name": "Hi Henrique!",
+    "Name": "Hi Danielle!",
     "Content": "Hello!",
-	"emails":  ["salmeidabatista@gmail.com", "henrique@teste.com.br", "henrique2@teste.com.br", "henrique@teste.com.br"]
+	"emails":  ["dacalil90@gmail.com", "danni@gmail.com", "dannicouto@gmail.com", "coutto@gmail.com"]
 }
 
 ###
@@ -39,7 +39,7 @@ Authorization: Bearer {{access_token}}
 POST {{identity_provider}}/realms/provider/protocol/openid-connect/token
 Content-Type: application/x-www-form-urlencoded
 
-client_id=emailn&username=salmeidabatista@gmail.com&password=123456&grant_type=password
+client_id=emailn&username=dacalil90@gmail.com&password=123456&grant_type=password
 
 ###
 @access_token = {{token.response.body.access_token}}

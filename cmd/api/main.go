@@ -4,7 +4,7 @@ import (
 	"EmailN/internal/domain/campaign"
 	"EmailN/internal/endpoints"
 	"EmailN/internal/infrastructure/database"
-	"emailn/internal/infrastructure/mail"
+	"EmailN/internal/infrastructure/mail"
 	"log"
 	"net/http"
 

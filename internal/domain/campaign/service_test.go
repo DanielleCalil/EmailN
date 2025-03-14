@@ -3,8 +3,8 @@ package campaign_test
 import (
 	"EmailN/internal/contract"
 	"EmailN/internal/domain/campaign"
-	internalerrors "EmailN/internal/internalErrors"
-	internalmock "emailn/internal/test/internal-mock"
+	internalerrors "EmailN/internal/internal-errors"
+	internalmock "EmailN/internal/test/internal-mock"
 	"errors"
 	"testing"
 
