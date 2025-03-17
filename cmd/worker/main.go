@@ -1,11 +1,8 @@
 package main
 
 import (
-	"EmailN/internal/domain/campaign"
 	"EmailN/internal/infrastructure/database"
-	"EmailN/internal/infrastructure/mail"
 	"log"
-	"time"
 
 	"github.com/joho/godotenv"
 )
@@ -17,27 +14,27 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	db := database.NewDb()
-	repository := database.CampaignRepository{Db: db}
-	campaignService := campaign.ServiceImp{
-		Repository: &repository,
-		SendMail:   mail.SendMail,
-	}
+	database.NewDb()
+	// repository := database.CampaignRepository{Db: db}
+	// campaignService := campaign.ServiceImp{
+	// 	Repository: &repository,
+	// 	SendMail:   mail.SendMail,
+	// }
 
-	for {
-		campaigns, err := repository.GetCampaignsToBeSent()
+	// for {
+	// 	campaigns, err := repository.GetCampaignsToBeSent()
 
-		if err != nil {
-			println(err.Error())
-		}
+	// 	if err != nil {
+	// 		println(err.Error())
+	// 	}
 
-		println("Amount of campaigns: ", len(campaigns))
+	// 	println("Amount of campaigns: ", len(campaigns))
 
-		for _, campaign := range campaigns {
-			campaignService.SendEmailAndUpdateStatus(&campaign)
-			println("Campaign sent: ", campaign.ID)
-		}
+	// 	for _, campaign := range campaigns {
+	// 		campaignService.SendEmailAndUpdateStatus(&campaign)
+	// 		println("Campaign sent: ", campaign.ID)
+	// 	}
 
-		time.Sleep(10 * time.Second)
-	}
+	// 	time.Sleep(10 * time.Second)
+	// }
 }
